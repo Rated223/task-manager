@@ -1,0 +1,15 @@
+{
+  "bracket-pair-colorizer-2.colors": [
+    "Gold",
+    "Orchid",
+    "LightSkyBlue",
+    "DarkGreen",
+    "Silver",
+    "RoyalBlue",
+    "HotPink",
+    "Chocolate",
+    "YellowGreen"
+  ],
+
+  "bracket-pair-colorizer-2.forceIterationColorCycle": true
+}
