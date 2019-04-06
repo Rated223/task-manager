@@ -1,4 +1,4 @@
-// CRUD 
+// CRUD create read update delete
 
 const { MongoClient, ObjectID } = require('mongodb');
 
@@ -13,43 +13,28 @@ MongoClient.connect(connectionURL, {useNewUrlParser: true}, (error, client) => {
     }
     const db = client.db(databaseName);
 
-    // db.collection('users').findOne({
-    //     _id: new ObjectID('5ca7d0c86ec47220476f64a3')
-    // }, (error, user) => {
-    //     if (error) {
-    //         return console.log('Unable to fetch');
+    // db.collection('users').updateOne({
+    //     _id: new ObjectID('5ca7cb1e7edc981e19585b01')
+    // }, {
+    //     $inc: { //Operator to make the changes
+    //         age: 1
     //     }
-    //     console.log(user);
+    // }).then((result) => {
+    //     console.log(result);
+    // }).catch((error) => {
+    //     console.log(error);
     // });
 
-    // db.collection('users').find({
-    //     age: 27
-    // }).toArray((error, users) => {
-    //    console.log(users) 
-    // })
-
-    // db.collection('users').find({
-    //     age: 27
-    // }).count((error, count) => {
-    //    console.log(count) 
-    // })
-
-    db.collection('tasks').findOne({
-        _id: new ObjectID('5ca7cc9c51bd7a1eb5f76a2e')
-    }, (error, task) => {
-        if (error) {
-            return console.log(error);
-        }
-        console.log(task);
-    });
-
-    db.collection('tasks').find({
+    db.collection('tasks').updateMany({
         completed: false
-    }).toArray((error, tasks) => {
-        if (error) {
-            return console.log(error);
+    }, {
+        $set: {
+            completed: true
         }
-        console.log(tasks);
+    }).then((result) => {
+        console.log(result)
+    }).catch((error) => {
+        console.log(ERROR)
     })
 });
 
