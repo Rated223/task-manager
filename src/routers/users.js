@@ -4,8 +4,7 @@ const auth = require('../middleware/auth');
 const router = new express.Router();
 const multer =require('multer');
 
-const avatar = multer({ 
-  dest: 'images/avatars',
+const avatar = multer({
   limits: {
     fileSize: 1000000 // 1mb
   },
@@ -68,17 +67,27 @@ router.patch('/users/myprofile', auth,  async (req, res) => {
 router.delete('/users/myprofile', auth, async (req, res) => {
   try {
       await req.user.remove();
-      res.send(req.user);
+      res.send();
   } catch (error) {
       res.status(500).send()
   }
 });
 
-router.post('/users/myprofile/avatar', [auth, avatar.single('avatar')], async (req, res) => {
+router.post('/users/myprofile/avatar', auth, avatar.single('avatar'), async (req, res) => {
+  req.user.avatar = req.file.buffer;
+  await req.user.save();
+  res.send( req.user );
+}, (error, req, res, next) => {
+  res.status(400).send( {error: error.message });
+});
+
+router.delete('/users/myprofile/avatar', auth, async (req, res) => {
   try {
-    res.send({ path: req.file.path, fieldname: req.file.fieldname });
+    req.user.avatar = undefined;
+    await req.user.save();
+    res.send();
   } catch (error) {
-    res.status(500).send();
+    res.status(400).send()
   }
 });
 
