@@ -4,7 +4,21 @@ const auth = require('../middleware/auth');
 const router = new express.Router();
 const multer =require('multer');
 
-const avatar = multer({ dest: 'images/avatars' });
+const avatar = multer({ 
+  dest: 'images/avatars',
+  limits: {
+    fileSize: 1000000 // 1mb
+  },
+  fileFilter(req, file, cb) {
+
+    if(!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+      return cb(new Error('File must be an image.'));
+    }
+
+    cb(undefined, true);
+
+  }
+});
 
 router.post('/users', async (req, res) => {
   const user = new User(req.body);
