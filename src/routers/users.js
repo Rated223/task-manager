@@ -50,7 +50,7 @@ router.get('/users/myprofile', auth, async (req, res) => {
   }
 });
 
-router.patch('/users/myprofile', auth,  async (req, res) => {
+router.patch('/users/myprofile', auth, async (req, res) => {
   const allowedUpdates = ['name', 'email', 'password', 'age'];
   const updates = Object.keys(req.body);
   const isValidOperator = updates.every((update) => allowedUpdates.includes(update));
